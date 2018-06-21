@@ -335,7 +335,6 @@ impl<'a> serialize::Decoder for Decoder<'a> {
 #[cfg(test)]
 mod tests {
     use serialize::{Encodable, Decodable};
-    use std::io::Cursor;
     use std::fmt::Debug;
     use super::{Encoder, Decoder};
 
@@ -364,7 +363,7 @@ mod tests {
 
 
     fn check_round_trip<T: Encodable + Decodable + PartialEq + Debug>(values: Vec<T>) {
-        let mut encoder = Encoder::new(&mut cursor);
+        let mut encoder = Encoder::new(Vec::new());
 
         for value in &values {
             Encodable::encode(&value, &mut encoder).unwrap();
